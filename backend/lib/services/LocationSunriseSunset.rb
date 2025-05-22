@@ -88,8 +88,7 @@ module Services
         lat: latitude,
         lng: longitude,
         date_start: start_date.iso8601,
-        date_end: end_date.iso8601,
-        timezone: TIMEZONE
+        date_end: end_date.iso8601
       }
       response = HTTParty.get(BASE_API_URL, query: query_params, timeout: 10)
 
