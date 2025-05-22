@@ -1,0 +1,214 @@
+  [1m[35m (3.3ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY) /*application='Backend'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='Backend'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2025-05-22 04:32:53.492113', '2025-05-22 04:32:53.492119') RETURNING "key" /*application='Backend'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Backend'*/[0m
+Migrating to CreateLocations (20250521233043)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE TABLE "locations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "latitude" decimal(10,7), "longitude" decimal(10,7), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='Backend'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20250521233043') RETURNING "version" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+Migrating to CreateLocationDates (20250522015641)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE TABLE "location_dates" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "location_id" integer NOT NULL, "date" date NOT NULL, "sunrise" varchar, "sunset" varchar, "golden_hour" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_55bae0754b"
+FOREIGN KEY ("location_id")
+  REFERENCES "locations" ("id")
+) /*application='Backend'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_location_dates_on_location_id" ON "location_dates" ("location_id") /*application='Backend'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_location_dates_on_location_and_date" ON "location_dates" ("location_id", "date") /*application='Backend'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20250522015641') RETURNING "version" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Backend'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'North Pole' AND "locations"."latitude" = 90.0 AND "locations"."longitude" = 0.0 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (0.3ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('North Pole', 90.0, 0.0, '2025-05-22 04:41:26.210790', '2025-05-22 04:41:26.210790') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (3.8ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'South Pole' AND "locations"."latitude" = -90.0 AND "locations"."longitude" = 0.0 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (2.0ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('South Pole', -90.0, 0.0, '2025-05-22 04:41:26.221876', '2025-05-22 04:41:26.221876') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Cairo' AND "locations"."latitude" = 30.0444 AND "locations"."longitude" = 31.2357 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (23.7ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('Cairo', 30.0444, 31.2357, '2025-05-22 04:41:26.229326', '2025-05-22 04:41:26.229326') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Nairobi' AND "locations"."latitude" = -1.2921 AND "locations"."longitude" = 36.8219 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (2.1ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('Nairobi', -1.2921, 36.8219, '2025-05-22 04:41:26.258722', '2025-05-22 04:41:26.258722') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Accra' AND "locations"."latitude" = 5.6037 AND "locations"."longitude" = -0.187 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (2.3ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('Accra', 5.6037, -0.187, '2025-05-22 04:41:26.268169', '2025-05-22 04:41:26.268169') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Pretoria' AND "locations"."latitude" = -25.7461 AND "locations"."longitude" = 28.1879 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (2.3ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('Pretoria', -25.7461, 28.1879, '2025-05-22 04:41:26.276460', '2025-05-22 04:41:26.276460') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Washington, D.C.' AND "locations"."latitude" = 38.9072 AND "locations"."longitude" = -77.0369 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (1.9ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('Washington, D.C.', 38.9072, -77.0369, '2025-05-22 04:41:26.285839', '2025-05-22 04:41:26.285839') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Ottawa' AND "locations"."latitude" = 45.4215 AND "locations"."longitude" = -75.6972 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (2.0ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('Ottawa', 45.4215, -75.6972, '2025-05-22 04:41:26.294700', '2025-05-22 04:41:26.294700') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Mexico City' AND "locations"."latitude" = 19.4326 AND "locations"."longitude" = -99.1332 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (2.0ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('Mexico City', 19.4326, -99.1332, '2025-05-22 04:41:26.303690', '2025-05-22 04:41:26.303690') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Brasília' AND "locations"."latitude" = -15.8267 AND "locations"."longitude" = -47.9218 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (2.7ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('Brasília', -15.8267, -47.9218, '2025-05-22 04:41:26.313872', '2025-05-22 04:41:26.313872') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Buenos Aires' AND "locations"."latitude" = -34.6037 AND "locations"."longitude" = -58.3816 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (1.8ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('Buenos Aires', -34.6037, -58.3816, '2025-05-22 04:41:26.322096', '2025-05-22 04:41:26.322096') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Lima' AND "locations"."latitude" = -12.0464 AND "locations"."longitude" = -77.0428 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (2.0ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('Lima', -12.0464, -77.0428, '2025-05-22 04:41:26.330338', '2025-05-22 04:41:26.330338') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Beijing' AND "locations"."latitude" = 39.9042 AND "locations"."longitude" = 116.4074 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (1.9ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('Beijing', 39.9042, 116.4074, '2025-05-22 04:41:26.337956', '2025-05-22 04:41:26.337956') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Tokyo' AND "locations"."latitude" = 35.6895 AND "locations"."longitude" = 139.6917 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (2.0ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('Tokyo', 35.6895, 139.6917, '2025-05-22 04:41:26.345833', '2025-05-22 04:41:26.345833') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'New Delhi' AND "locations"."latitude" = 28.6139 AND "locations"."longitude" = 77.209 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (2.1ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('New Delhi', 28.6139, 77.209, '2025-05-22 04:41:26.353990', '2025-05-22 04:41:26.353990') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Seoul' AND "locations"."latitude" = 37.5665 AND "locations"."longitude" = 126.978 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (2.2ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('Seoul', 37.5665, 126.978, '2025-05-22 04:41:26.362178', '2025-05-22 04:41:26.362178') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Jakarta' AND "locations"."latitude" = -6.2088 AND "locations"."longitude" = 106.8456 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (2.3ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('Jakarta', -6.2088, 106.8456, '2025-05-22 04:41:26.370359', '2025-05-22 04:41:26.370359') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Riyadh' AND "locations"."latitude" = 24.7136 AND "locations"."longitude" = 46.6753 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (2.1ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('Riyadh', 24.7136, 46.6753, '2025-05-22 04:41:26.378116', '2025-05-22 04:41:26.378116') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Ankara' AND "locations"."latitude" = 39.9334 AND "locations"."longitude" = 32.8597 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (2.1ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('Ankara', 39.9334, 32.8597, '2025-05-22 04:41:26.386194', '2025-05-22 04:41:26.386194') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'London' AND "locations"."latitude" = 51.5072 AND "locations"."longitude" = -0.1276 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (1.9ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('London', 51.5072, -0.1276, '2025-05-22 04:41:26.394091', '2025-05-22 04:41:26.394091') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Paris' AND "locations"."latitude" = 48.8566 AND "locations"."longitude" = 2.3522 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (2.0ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('Paris', 48.8566, 2.3522, '2025-05-22 04:41:26.401731', '2025-05-22 04:41:26.401731') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Berlin' AND "locations"."latitude" = 52.52 AND "locations"."longitude" = 13.405 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (3.8ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('Berlin', 52.52, 13.405, '2025-05-22 04:41:26.412035', '2025-05-22 04:41:26.412035') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Madrid' AND "locations"."latitude" = 40.4168 AND "locations"."longitude" = -3.7038 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (2.3ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('Madrid', 40.4168, -3.7038, '2025-05-22 04:41:26.423059', '2025-05-22 04:41:26.423059') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Rome' AND "locations"."latitude" = 41.9028 AND "locations"."longitude" = 12.4964 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (2.4ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('Rome', 41.9028, 12.4964, '2025-05-22 04:41:26.431361', '2025-05-22 04:41:26.431361') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Moscow' AND "locations"."latitude" = 55.7558 AND "locations"."longitude" = 37.6173 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (2.3ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('Moscow', 55.7558, 37.6173, '2025-05-22 04:41:26.439607', '2025-05-22 04:41:26.439607') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Kyiv' AND "locations"."latitude" = 50.4501 AND "locations"."longitude" = 30.5234 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (2.4ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('Kyiv', 50.4501, 30.5234, '2025-05-22 04:41:26.447769', '2025-05-22 04:41:26.447769') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Lisbon' AND "locations"."latitude" = 38.7223 AND "locations"."longitude" = -9.1393 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (2.5ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('Lisbon', 38.7223, -9.1393, '2025-05-22 04:41:26.455962', '2025-05-22 04:41:26.455962') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Canberra' AND "locations"."latitude" = -35.2809 AND "locations"."longitude" = 149.13 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (2.3ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('Canberra', -35.2809, 149.13, '2025-05-22 04:41:26.464078', '2025-05-22 04:41:26.464078') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Wellington' AND "locations"."latitude" = -41.2865 AND "locations"."longitude" = 174.7762 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (2.4ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('Wellington', -41.2865, 174.7762, '2025-05-22 04:41:26.472450', '2025-05-22 04:41:26.472450') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Suva' AND "locations"."latitude" = -18.1333 AND "locations"."longitude" = 178.4419 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Create (2.4ms)[0m  [1m[32mINSERT INTO "locations" ("name", "latitude", "longitude", "created_at", "updated_at") VALUES ('Suva', -18.1333, 178.4419, '2025-05-22 04:41:26.480699', '2025-05-22 04:41:26.480699') RETURNING "id" /*application='Backend'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Backend'*/[0m
+  [1m[36mLocation Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "locations" /*application='Backend'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'North Pole' AND "locations"."latitude" = 90.0 AND "locations"."longitude" = 0.0 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'South Pole' AND "locations"."latitude" = -90.0 AND "locations"."longitude" = 0.0 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Cairo' AND "locations"."latitude" = 30.0444 AND "locations"."longitude" = 31.2357 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Nairobi' AND "locations"."latitude" = -1.2921 AND "locations"."longitude" = 36.8219 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Accra' AND "locations"."latitude" = 5.6037 AND "locations"."longitude" = -0.187 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Pretoria' AND "locations"."latitude" = -25.7461 AND "locations"."longitude" = 28.1879 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Washington, D.C.' AND "locations"."latitude" = 38.9072 AND "locations"."longitude" = -77.0369 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Ottawa' AND "locations"."latitude" = 45.4215 AND "locations"."longitude" = -75.6972 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Mexico City' AND "locations"."latitude" = 19.4326 AND "locations"."longitude" = -99.1332 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Brasília' AND "locations"."latitude" = -15.8267 AND "locations"."longitude" = -47.9218 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Buenos Aires' AND "locations"."latitude" = -34.6037 AND "locations"."longitude" = -58.3816 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Lima' AND "locations"."latitude" = -12.0464 AND "locations"."longitude" = -77.0428 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Beijing' AND "locations"."latitude" = 39.9042 AND "locations"."longitude" = 116.4074 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Tokyo' AND "locations"."latitude" = 35.6895 AND "locations"."longitude" = 139.6917 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'New Delhi' AND "locations"."latitude" = 28.6139 AND "locations"."longitude" = 77.209 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Seoul' AND "locations"."latitude" = 37.5665 AND "locations"."longitude" = 126.978 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Jakarta' AND "locations"."latitude" = -6.2088 AND "locations"."longitude" = 106.8456 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.5ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Riyadh' AND "locations"."latitude" = 24.7136 AND "locations"."longitude" = 46.6753 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Ankara' AND "locations"."latitude" = 39.9334 AND "locations"."longitude" = 32.8597 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'London' AND "locations"."latitude" = 51.5072 AND "locations"."longitude" = -0.1276 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Paris' AND "locations"."latitude" = 48.8566 AND "locations"."longitude" = 2.3522 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Berlin' AND "locations"."latitude" = 52.52 AND "locations"."longitude" = 13.405 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Madrid' AND "locations"."latitude" = 40.4168 AND "locations"."longitude" = -3.7038 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Rome' AND "locations"."latitude" = 41.9028 AND "locations"."longitude" = 12.4964 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.4ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Moscow' AND "locations"."latitude" = 55.7558 AND "locations"."longitude" = 37.6173 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Kyiv' AND "locations"."latitude" = 50.4501 AND "locations"."longitude" = 30.5234 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Lisbon' AND "locations"."latitude" = 38.7223 AND "locations"."longitude" = -9.1393 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Canberra' AND "locations"."latitude" = -35.2809 AND "locations"."longitude" = 149.13 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Wellington' AND "locations"."latitude" = -41.2865 AND "locations"."longitude" = 174.7762 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."name" = 'Suva' AND "locations"."latitude" = -18.1333 AND "locations"."longitude" = 178.4419 LIMIT 1 /*application='Backend'*/[0m
+  [1m[36mLocation Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "locations" /*application='Backend'*/[0m
+Started GET "/locations/26?start_date=2025-06-01&end_date=2025-06-07" for 127.0.0.1 at 2025-05-22 00:48:51 -0400
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Backend'*/[0m
+Processing by LocationController#show as JSON
+  Parameters: {"start_date" => "2025-06-01", "end_date" => "2025-06-07", "location_id" => "26"}
+Completed 404 Not Found in 26ms (ActiveRecord: 2.1ms (0 queries, 0 cached) | GC: 4.8ms)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Location without an ID):
+  
+app/controllers/location_controller.rb:20:in 'LocationController#set_location'
+  [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."id" = 26 LIMIT 1 /*application='Backend'*/[0m
+Started GET "/locations/26?start_date=2025-06-01&end_date=2025-06-07" for 127.0.0.1 at 2025-05-22 00:51:47 -0400
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Backend'*/[0m
+Processing by LocationController#show as JSON
+  Parameters: {"start_date" => "2025-06-01", "end_date" => "2025-06-07", "id" => "26"}
+  [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."id" = 26 LIMIT 1 /*action='show',application='Backend',controller='location'*/[0m
+  ↳ app/controllers/location_controller.rb:20:in 'LocationController#set_location'
+  [1m[36mLocationDate Load (0.3ms)[0m  [1m[34mSELECT "location_dates".* FROM "location_dates" WHERE "location_dates"."location_id" = 26 AND "location_dates"."date" IN ('2025-06-01', '2025-06-02', '2025-06-03', '2025-06-04', '2025-06-05', '2025-06-06', '2025-06-07') /*action='show',application='Backend',controller='location'*/[0m
+  ↳ lib/services/LocationSunriseSunset.rb:25:in 'Services::LocationSunriseSunset#fetch_and_store_history'
+  [1m[36mLocationDate Bulk Insert (5.2ms)[0m  [1m[32mINSERT INTO "location_dates" ("location_id","date","sunrise","sunset","golden_hour","created_at","updated_at") VALUES (26, '2025-06-01', '1:53:07 AM', '6:01:15 PM', '5:10:17 PM', '2025-05-22 04:51:47.817596', '2025-05-22 04:51:47.817633'), (26, '2025-06-02', '1:52:24 AM', '6:02:17 PM', '5:11:11 PM', '2025-05-22 04:51:47.817651', '2025-05-22 04:51:47.817654'), (26, '2025-06-03', '1:51:43 AM', '6:03:17 PM', '5:12:03 PM', '2025-05-22 04:51:47.817666', '2025-05-22 04:51:47.817669'), (26, '2025-06-04', '1:51:05 AM', '6:04:15 PM', '5:12:53 PM', '2025-05-22 04:51:47.817680', '2025-05-22 04:51:47.817683'), (26, '2025-06-05', '1:50:29 AM', '6:05:11 PM', '5:13:42 PM', '2025-05-22 04:51:47.817695', '2025-05-22 04:51:47.817697'), (26, '2025-06-06', '1:49:57 AM', '6:06:04 PM', '5:14:29 PM', '2025-05-22 04:51:47.817710', '2025-05-22 04:51:47.817712'), (26, '2025-06-07', '1:49:27 AM', '6:06:55 PM', '5:15:14 PM', '2025-05-22 04:51:47.817728', '2025-05-22 04:51:47.817730') ON CONFLICT  DO NOTHING RETURNING "id" /*action='show',application='Backend',controller='location'*/[0m
+  ↳ lib/services/LocationSunriseSunset.rb:51:in 'Services::LocationSunriseSunset#fetch_and_store_history'
+  [1m[36mLocationDate Load (0.2ms)[0m  [1m[34mSELECT "location_dates".* FROM "location_dates" WHERE "location_dates"."location_id" = 26 AND "location_dates"."date" IN ('2025-06-01', '2025-06-02', '2025-06-03', '2025-06-04', '2025-06-05', '2025-06-06', '2025-06-07') /*action='show',application='Backend',controller='location'*/[0m
+  ↳ lib/services/LocationSunriseSunset.rb:54:in 'Services::LocationSunriseSunset#fetch_and_store_history'
+Completed 200 OK in 412ms (Views: 0.4ms | ActiveRecord: 9.0ms (4 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/locations/26?start_date=2025-06-01&end_date=2025-06-07" for 127.0.0.1 at 2025-05-22 00:53:30 -0400
+Processing by LocationController#show as JSON
+  Parameters: {"start_date" => "2025-06-01", "end_date" => "2025-06-07", "id" => "26"}
+  [1m[36mLocation Load (0.4ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."id" = 26 LIMIT 1 /*action='show',application='Backend',controller='location'*/[0m
+  ↳ app/controllers/location_controller.rb:20:in 'LocationController#set_location'
+  [1m[36mLocationDate Load (0.5ms)[0m  [1m[34mSELECT "location_dates".* FROM "location_dates" WHERE "location_dates"."location_id" = 26 AND "location_dates"."date" IN ('2025-06-01', '2025-06-02', '2025-06-03', '2025-06-04', '2025-06-05', '2025-06-06', '2025-06-07') /*action='show',application='Backend',controller='location'*/[0m
+  ↳ lib/services/LocationSunriseSunset.rb:25:in 'Services::LocationSunriseSunset#fetch_and_store_history'
+Completed 200 OK in 7ms (Views: 0.2ms | ActiveRecord: 0.8ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+  [1m[36mLocationDate Load (2.6ms)[0m  [1m[34mSELECT "location_dates".* FROM "location_dates" /* loading for pp */ LIMIT 11 /*application='Backend'*/[0m
+  [1m[36mLocationDate Load (0.4ms)[0m  [1m[34mSELECT "location_dates".* FROM "location_dates" /* loading for pp */ LIMIT 11 /*application='Backend'*/[0m
