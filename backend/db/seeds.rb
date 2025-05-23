@@ -5,10 +5,6 @@
 puts "Seeding Locations..."
 
 locations_data = [
-  # Poles
-  { name: "North Pole", latitude: 90.0, longitude: 0.0 },
-  { name: "South Pole", latitude: -90.0, longitude: 0.0 },
-
   # Sample World Capitals (Add more as needed)
   # Africa
   { name: "Cairo", latitude: 30.0444, longitude: 31.2357 }, # Egypt
@@ -23,6 +19,8 @@ locations_data = [
   { name: "Brasília", latitude: -15.8267, longitude: -47.9218 }, # Brazil
   { name: "Buenos Aires", latitude: -34.6037, longitude: -58.3816 }, # Argentina
   { name: "Lima", latitude: -12.0464, longitude: -77.0428 }, # Peru
+  { name: "Santiago", latitude: -33.4489, longitude: -70.6693 }, # Chile
+  { name: "Quito", latitude: -0.2299, longitude: -78.5249 }, # Ecuador
 
   # Asia
   { name: "Beijing", latitude: 39.9042, longitude: 116.4074 }, # China
@@ -46,7 +44,17 @@ locations_data = [
   # Oceania
   { name: "Canberra", latitude: -35.2809, longitude: 149.1300 }, # Australia
   { name: "Wellington", latitude: -41.2865, longitude: 174.7762 }, # New Zealand
-  { name: "Suva", latitude: -18.1333, longitude: 178.4419 }  # Fiji
+  { name: "Suva", latitude: -18.1333, longitude: 178.4419 },  # Fiji
+
+  # Arctic/Antarctic Circle Locations
+  { name: "Tromsø", latitude: 69.6492, longitude: 18.9553 }, # Norway (Arctic)
+  { name: "Murmansk", latitude: 68.9585, longitude: 33.0827 }, # Russia (Arctic)
+  { name: "Longyearbyen", latitude: 78.2232, longitude: 15.6267 }, # Svalbard, Norway (Arctic)
+  { name: "Utqiagvik (Barrow)", latitude: 71.2906, longitude: -156.7886 }, # Alaska, USA (Arctic)
+  { name: "Nuuk", latitude: 64.1836, longitude: -51.7216 }, # Greenland (Arctic)
+  { name: "Reykjavik", latitude: 64.1466, longitude: -21.9426 }, # Iceland (Near Arctic Circle, experiences very short nights/days)
+  { name: "McMurdo Station", latitude: -77.8463, longitude: 166.6763 }, # Antarctica (Research Station)
+  { name: "Davis Station", latitude: -68.5763, longitude: 77.9672 } # Antarctica (Research Station)
 ]
 
 locations_data.each do |loc_data|

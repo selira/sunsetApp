@@ -90,6 +90,7 @@ module Services
         date_start: start_date.iso8601,
         date_end: end_date.iso8601
       }
+      puts "Querying SunriseSunset.io API with params: #{query_params}"
       response = HTTParty.get(BASE_API_URL, query: query_params, timeout: 10)
 
       if response.success? && response.parsed_response['status'] == 'OK'

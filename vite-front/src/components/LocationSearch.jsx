@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchLocations, fetchLocationHistory } from '../services/api';
+import HistoryTable from './HistoryTable';
+import HistoryChart from './HistoryChart';
 
 const LocationSearch = () => {
   const [locations, setLocations] = useState([]);
@@ -9,6 +11,7 @@ const LocationSearch = () => {
   const [historicalData, setHistoricalData] = useState(null);
   const [loadingLocations, setLoadingLocations] = useState(false);
   const [loadingHistory, setLoadingHistory] = useState(false);
+  const [loadedLocationId, setLoadedLocationId] = useState('');
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -19,7 +22,7 @@ const LocationSearch = () => {
         const data = await fetchLocations();
         setLocations(data);
         if (data.length > 0) {
-          setSelectedLocation(data[0].id); // Default to the first location
+          setSelectedLocation(data[0].id);
         }
       } catch (err) {
         setError(err.message);
@@ -43,12 +46,19 @@ const LocationSearch = () => {
     try {
       const data = await fetchLocationHistory(selectedLocation, startDate, endDate);
       setHistoricalData(data);
+      setLoadedLocationId(selectedLocation);
     } catch (err) {
       setError(err.message);
       console.error("Failed to load historical data:", err);
     } finally {
       setLoadingHistory(false);
     }
+  };
+  
+  const getLoadedLocationName = () => {
+    if (!loadedLocationId || locations.length === 0) return '';
+    const foundLocation = locations.find(loc => loc.id.toString() === loadedLocationId);
+    return foundLocation ? foundLocation.name : '';
   };
 
   return (
@@ -68,7 +78,7 @@ const LocationSearch = () => {
           >
             {locations.length === 0 && !loadingLocations && <option value="">No locations available</option>}
             {locations.map((location) => (
-              <option key={location.id} value={location.id}>
+              <option key={location.id} value={location.id.toString()}>
                 {location.name}
               </option>
             ))}
@@ -106,31 +116,8 @@ const LocationSearch = () => {
 
       {historicalData && (
         <div>
-          <h3>Historical Data for {locations.find(loc => loc.id === parseInt(selectedLocation))?.name}</h3>
-          {historicalData.length > 0 ? (
-            <table>
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Sunrise</th>
-                  <th>Sunset</th>
-                  <th>Golden Hour</th>
-                </tr>
-              </thead>
-              <tbody>
-                {historicalData.map((entry, index) => (
-                  <tr key={entry.date || index}>
-                    <td>{entry.date}</td>
-                    <td>{entry.sunrise || 'N/A'}</td>
-                    <td>{entry.sunset || 'N/A'}</td>
-                    <td>{entry.golden_hour || 'N/A'}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <p>No historical data found for the selected criteria.</p>
-          )}
+          <HistoryTable data={historicalData} locationName={getLoadedLocationName()} />
+          <HistoryChart data={historicalData} locationName={getLoadedLocationName()} />
         </div>
       )}
     </div>
