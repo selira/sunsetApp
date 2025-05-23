@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { fetchLocations, fetchLocationHistory } from '../services/api';
 import HistoryTable from './HistoryTable';
 import HistoryChart from './HistoryChart';
+import LocationMap from './LocationMap'; // Import the new map component
 
 const LocationSearch = () => {
   const [locations, setLocations] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [startDate, setStartDate] = useState('2025-01-01');
+  const [endDate, setEndDate] = useState('2025-12-31');
   const [historicalData, setHistoricalData] = useState(null);
-  const [loadingLocations, setLoadingLocations] = useState(false);
+  const [loadingLocations, setLoadingLocations] = useState(true);
   const [loadingHistory, setLoadingHistory] = useState(false);
   const [loadedLocationId, setLoadedLocationId] = useState('');
   const [error, setError] = useState(null);
@@ -21,8 +22,8 @@ const LocationSearch = () => {
       try {
         const data = await fetchLocations();
         setLocations(data);
-        if (data.length > 0) {
-          setSelectedLocation(data[0].id);
+        if (data.length > 0 && !selectedLocation) { // Set default only if not already selected
+          setSelectedLocation(data[0].id.toString());
         }
       } catch (err) {
         setError(err.message);
@@ -32,7 +33,7 @@ const LocationSearch = () => {
       }
     };
     loadLocations();
-  }, []);
+  }, []); // Empty dependency array, runs once on mount
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -61,13 +62,28 @@ const LocationSearch = () => {
     return foundLocation ? foundLocation.name : '';
   };
 
+  const handleMapLocationSelect = (locationId) => {
+    setSelectedLocation(locationId); // locationId should already be a string from map
+  };
+
   return (
     <div>
       <h2>Location Sunrise/Sunset History</h2>
-
-      {loadingLocations && <p>Loading locations...</p>}
       
-      <form onSubmit={handleSearch}>
+      {/* Map Section */}
+      {loadingLocations && <p>Loading map and locations...</p>}
+      {!loadingLocations && locations.length > 0 && (
+        <LocationMap
+          locations={locations}
+          onSelectLocation={handleMapLocationSelect}
+          activeLocationId={selectedLocation}
+        />
+      )}
+      {!loadingLocations && locations.length === 0 && <p>No locations available to display on map.</p>}
+
+
+      {/* Form Section */}
+      <form onSubmit={handleSearch} style={{ marginTop: '20px' }}>
         <div>
           <label htmlFor="location-select">Choose a location:</label>
           <select 
@@ -112,10 +128,11 @@ const LocationSearch = () => {
         </button>
       </form>
 
-      {error && <p style={{ color: 'red' }}>Error: {error}</p>}
+      {error && <p style={{ color: 'red', marginTop: '10px' }}>Error: {error}</p>}
 
+      {/* Results Section */}
       {historicalData && (
-        <div>
+        <div style={{ marginTop: '20px' }}>
           <HistoryTable data={historicalData} locationName={getLoadedLocationName()} />
           <HistoryChart data={historicalData} locationName={getLoadedLocationName()} />
         </div>
