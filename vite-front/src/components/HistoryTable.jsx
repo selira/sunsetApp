@@ -1,15 +1,13 @@
-import React from 'react';
+import './HistoryTable.css'; // Import the CSS file
 
 const HistoryTable = ({ data, locationName }) => {
   if (!data || data.length === 0) {
-    return <p>No historical data found for the selected criteria.</p>;
+    return <p className="no-data-message">No historical data found for the selected criteria.</p>;
   }
 
   return (
-    <div>
-      <h3>Historical Data for {locationName}</h3>
-      <h4> All times in city local time as provided by <a href='https://sunrisesunset.io' target='_blank'>sunrisesunset.io</a></h4>
-      <table>
+    <div className="history-table-container">
+      <table className="history-table">
         <thead>
           <tr>
             <th>Date</th>

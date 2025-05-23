@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { fetchLocations, fetchLocationHistory } from '../services/api';
 import HistoryTable from './HistoryTable';
 import HistoryChart from './HistoryChart';
-import LocationMap from './LocationMap'; // Import the new map component
+import LocationMap from './LocationMap';
+import './LocationSearch.css';
 
 const LocationSearch = () => {
   const [locations, setLocations] = useState([]);
@@ -22,7 +23,7 @@ const LocationSearch = () => {
       try {
         const data = await fetchLocations();
         setLocations(data);
-        if (data.length > 0 && !selectedLocation) { // Set default only if not already selected
+        if (data.length > 0 && !selectedLocation) {
           setSelectedLocation(data[0].id.toString());
         }
       } catch (err) {
@@ -33,7 +34,7 @@ const LocationSearch = () => {
       }
     };
     loadLocations();
-  }, []); // Empty dependency array, runs once on mount
+  }, []);
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -63,80 +64,88 @@ const LocationSearch = () => {
   };
 
   const handleMapLocationSelect = (locationId) => {
-    setSelectedLocation(locationId); // locationId should already be a string from map
+    setSelectedLocation(locationId);
   };
 
   return (
-    <div>
-      <h2>Location Sunrise/Sunset History</h2>
-      
-      {/* Map Section */}
-      {loadingLocations && <p>Loading map and locations...</p>}
-      {!loadingLocations && locations.length > 0 && (
-        <LocationMap
-          locations={locations}
-          onSelectLocation={handleMapLocationSelect}
-          activeLocationId={selectedLocation}
-        />
-      )}
-      {!loadingLocations && locations.length === 0 && <p>No locations available to display on map.</p>}
+    <div className="location-search-container">
 
+      <div className="layout-container">
+        {/* Left Column: Map, Inputs, Button */}
+        <div className="left-column">
+          <form onSubmit={handleSearch} className="form-section">
+            <div>
+              <label htmlFor="location-select">Choose a location:</label>
+              <select 
+                id="location-select" 
+                value={selectedLocation} 
+                onChange={(e) => setSelectedLocation(e.target.value)}
+                disabled={loadingLocations || locations.length === 0}
+              >
+                {loadingLocations && <option value="">Loading locations...</option>}
+                {!loadingLocations && locations.length === 0 && <option value="">No locations available</option>}
+                {locations.map((location) => (
+                  <option key={location.id} value={location.id.toString()}>
+                    {location.name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-      {/* Form Section */}
-      <form onSubmit={handleSearch} style={{ marginTop: '20px' }}>
-        <div>
-          <label htmlFor="location-select">Choose a location:</label>
-          <select 
-            id="location-select" 
-            value={selectedLocation} 
-            onChange={(e) => setSelectedLocation(e.target.value)}
-            disabled={loadingLocations || locations.length === 0}
-          >
-            {locations.length === 0 && !loadingLocations && <option value="">No locations available</option>}
-            {locations.map((location) => (
-              <option key={location.id} value={location.id.toString()}>
-                {location.name}
-              </option>
-            ))}
-          </select>
+            <div>
+              <label htmlFor="start-date">Start Date:</label>
+              <input 
+                type="date" 
+                id="start-date" 
+                value={startDate} 
+                onChange={(e) => setStartDate(e.target.value)} 
+                required 
+              />
+            </div>
+
+            <div>
+              <label htmlFor="end-date">End Date:</label>
+              <input 
+                type="date" 
+                id="end-date" 
+                value={endDate} 
+                onChange={(e) => setEndDate(e.target.value)} 
+                required 
+              />
+            </div>
+
+            <button type="submit" disabled={loadingHistory || !selectedLocation}>
+              {loadingHistory ? 'Searching...' : 'Search History'}
+            </button>
+          </form>
+
+          {!loadingLocations && locations.length > 0 && (
+            <LocationMap
+              locations={locations}
+              onSelectLocation={handleMapLocationSelect}
+              activeLocationId={selectedLocation}
+            />
+          )}
         </div>
 
-        <div>
-          <label htmlFor="start-date">Start Date:</label>
-          <input 
-            type="date" 
-            id="start-date" 
-            value={startDate} 
-            onChange={(e) => setStartDate(e.target.value)} 
-            required 
-          />
+        {/* Right Column: Table and Chart */}
+        <div className="right-column">
+          {error && <p className="error-message">Error: {error}</p>}
+          
+          {loadingHistory && <p>Loading history data...</p>}
+
+          {!loadingHistory && historicalData && Object.keys(historicalData).length > 0 && (
+            
+            <>
+              <HistoryChart data={historicalData} locationName={getLoadedLocationName()} />
+              <HistoryTable data={historicalData}/>
+            </>
+          )}
+          {!loadingHistory && (!historicalData || Object.keys(historicalData).length === 0) && !error && !loadingLocations && (
+             <p className="results-placeholder">Select a location and date range, then click "Search History" to see results.</p>
+          )}
         </div>
-
-        <div>
-          <label htmlFor="end-date">End Date:</label>
-          <input 
-            type="date" 
-            id="end-date" 
-            value={endDate} 
-            onChange={(e) => setEndDate(e.target.value)} 
-            required 
-          />
-        </div>
-
-        <button type="submit" disabled={loadingHistory || !selectedLocation}>
-          {loadingHistory ? 'Searching...' : 'Search History'}
-        </button>
-      </form>
-
-      {error && <p style={{ color: 'red', marginTop: '10px' }}>Error: {error}</p>}
-
-      {/* Results Section */}
-      {historicalData && (
-        <div style={{ marginTop: '20px' }}>
-          <HistoryTable data={historicalData} locationName={getLoadedLocationName()} />
-          <HistoryChart data={historicalData} locationName={getLoadedLocationName()} />
-        </div>
-      )}
+      </div>
     </div>
   );
 };

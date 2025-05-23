@@ -1,0 +1,90 @@
+.location-search-container {
+  padding: 15px;
+}
+
+.layout-container {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping for smaller screens before media query kicks in */
+  gap: 60px; /* Space between columns */
+  margin-top: 20px;
+}
+
+.left-column {
+  flex: 1; /* Takes up 1 part of the available space */
+  min-width: 500px; /* Minimum width before wrapping or stacking */
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Space between items in the left column */
+}
+
+.right-column {
+  flex: 2; /* Takes up 2 parts of the available space, making it wider */
+  min-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 80px; /* Space between items in the right column */
+}
+
+.form-section div {
+  margin-bottom: 10px;
+}
+
+.form-section label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-section input,
+.form-section select,
+.form-section button {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-section button {
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  margin-top: 20px;
+}
+
+.form-section button:hover {
+  background-color: #0056b3;
+}
+
+.form-section button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+
+.results-placeholder {
+  padding: 20px;
+  text-align: center;
+  color: #555;
+  border: 1px dashed #ccc;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+
+/* Mobile view: stack columns */
+@media (max-width: 768px) {
+  .layout-container {
+    flex-direction: column;
+    gap: 20px; /* Space between stacked columns */
+  }
+  .left-column,
+  .right-column {
+    flex: 1 1 100%; /* Allow columns to take full width when stacked */
+    min-width: unset; /* Remove min-width for stacked columns */
+  }
+}

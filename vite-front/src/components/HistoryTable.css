@@ -1,0 +1,60 @@
+.history-table-container {
+  width: 100%;
+  overflow-x: auto; /* Allows table to scroll horizontally on small screens if needed */
+  margin-top: 20px; /* Space above the table */
+  background-color: var(--ls-surface-color, #ffdfafc0); /* Use variable from LocationSearch or fallback */
+  border-radius: var(--ls-border-radius, 6px);
+  box-shadow: var(--ls-box-shadow, 0 2px 10px rgba(0, 0, 0, 0.075));
+  padding: var(--ls-padding, 15px);
+}
+
+.history-table-container h4 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: var(--ls-text-color, #000000);
+  text-align: left;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse; /* Removes default spacing between cells */
+  text-align: left; /* Default text alignment for cells */
+}
+
+.history-table th,
+.history-table td {
+  padding: 12px 15px; /* Vertical and horizontal padding */
+  border-bottom: 1px solid var(--ls-border-color, #dee2e6); /* Horizontal lines between rows */
+  vertical-align: middle; /* Align content vertically in the middle */
+}
+
+.history-table thead th {
+  background-color: rgba(128, 16, 16, 0.5); /* Primary color for header */
+  color: var(--ls-button-text-color, #fff); /* White text for header */
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  position: sticky; /* Make header sticky if table scrolls vertically */
+  top: 0; /* Required for sticky header */
+  z-index: 1; /* Ensure header stays above content */
+}
+
+.history-table tbody tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.02); /* Subtle striping for even rows */
+}
+
+.history-table tbody tr:hover {
+  background-color: rgba(0, 123, 255, 0.05); /* Light blue hover for rows */
+}
+
+.history-table td {
+  color: var(--ls-text-color-light, #181818);
+}
+
+.no-data-message {
+  padding: 20px;
+  text-align: center;
+  color: var(--ls-text-color-light, #555);
+  background-color: var(--ls-surface-color, #f8f9fa);
+  border-radius: var(--ls-border-radius, 6px);
+  border: 1px dashed var(--ls-border-color, #dee2e6);
+}

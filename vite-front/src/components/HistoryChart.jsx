@@ -163,8 +163,9 @@ const HistoryChart = ({ data, locationName }) => {
   }
 
   return (
-    <div style={{ marginTop: '20px', height: '400px', width: '100%' }}>
-      <h4>Timeline Chart</h4>
+    <div style={{ marginBottom: '50px', height: '400px', width: '100%' }}>
+      <h3>Historical Data for {locationName}</h3>
+      <h4>All times are in local city time, as provided by <a href='https://sunrisesunset.io' target='_blank'>sunrisesunset.io</a></h4>
       <Line options={chartOptions} data={chartData} />
     </div>
   );

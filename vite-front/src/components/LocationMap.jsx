@@ -56,10 +56,10 @@ const LocationMap = ({ locations, onSelectLocation, activeLocationId }) => {
               <br />
               <button 
                 onClick={(e) => { 
-                  e.stopPropagation(); // Prevent marker click from firing again if popup is part of marker
+                  e.stopPropagation();
                   onSelectLocation(location.id.toString());
                   if (markerRef.current) {
-                    markerRef.current.closePopup(); // Close the popup
+                    markerRef.current.closePopup();
                   }
                 }} 
                 style={{ marginTop: '5px', cursor: 'pointer' }}

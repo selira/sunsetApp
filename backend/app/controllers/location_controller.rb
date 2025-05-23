@@ -33,7 +33,7 @@ class LocationController < ApplicationController
       end
 
       if @start_date > @end_date
-        render json: { error: "start_date cannot be after end_date" }, status: :bad_request and return
+        render json: { error: "Start date cannot be after end date" }, status: :bad_request and return
       end
     end
 end
