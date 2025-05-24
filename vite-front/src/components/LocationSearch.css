@@ -4,17 +4,17 @@
 
 .layout-container {
   display: flex;
-  flex-wrap: wrap; /* Allow wrapping for smaller screens before media query kicks in */
-  gap: 60px; /* Space between columns */
+  flex-wrap: wrap;
+  gap: 60px;
   margin-top: 20px;
 }
 
 .left-column {
   flex: 1; /* Takes up 1 part of the available space */
-  min-width: 500px; /* Minimum width before wrapping or stacking */
+  min-width: 500px;
   display: flex;
   flex-direction: column;
-  gap: 20px; /* Space between items in the left column */
+  gap: 20px;
 }
 
 .right-column {
@@ -22,7 +22,7 @@
   min-width: 400px;
   display: flex;
   flex-direction: column;
-  gap: 80px; /* Space between items in the right column */
+  gap: 80px;
 }
 
 .form-section div {
@@ -80,7 +80,10 @@
 @media (max-width: 768px) {
   .layout-container {
     flex-direction: column;
-    gap: 20px; /* Space between stacked columns */
+    gap: 20px;
+  }
+  .location-search-container {
+    padding: 10px;
   }
   .left-column,
   .right-column {

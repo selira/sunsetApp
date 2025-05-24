@@ -1,4 +1,4 @@
-import './HistoryTable.css'; // Import the CSS file
+import './HistoryTable.css';
 
 const HistoryTable = ({ data, locationName }) => {
   if (!data || data.length === 0) {
