@@ -35,14 +35,13 @@ const LocationMap = ({ locations, onSelectLocation, activeLocationId }) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {locations.map((location) => {
-        const markerRef = React.createRef(); // Create a ref for each marker
+        const markerRef = React.createRef();
 
         const lat = parseFloat(location.latitude);
         const lon = parseFloat(location.longitude);
 
         if (isNaN(lat) || isNaN(lon)) {
-          console.warn(`Invalid coordinates for location: ${location.name}`, location);
-          return null; // Skip rendering this marker
+          return null;
         }
 
         return (

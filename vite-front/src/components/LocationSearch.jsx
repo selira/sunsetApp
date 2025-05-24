@@ -22,6 +22,7 @@ const LocationSearch = () => {
       setError(null);
       try {
         const data = await fetchLocations();
+        data.push({ id: 0, name: 'Non-existing location', latitude: null, longitude: null }); // to test the 404 response.
         setLocations(data);
         if (data.length > 0 && !selectedLocation) {
           setSelectedLocation(data[0].id.toString());
@@ -51,7 +52,6 @@ const LocationSearch = () => {
       setLoadedLocationId(selectedLocation);
     } catch (err) {
       setError(err.message);
-      console.error("Failed to load historical data:", err);
     } finally {
       setLoadingHistory(false);
     }

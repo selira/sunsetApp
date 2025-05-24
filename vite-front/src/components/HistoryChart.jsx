@@ -60,15 +60,12 @@ const HistoryChart = ({ data, locationName }) => {
 
   useEffect(() => {
     if (data && data.length > 0) {
-      console.log("Data for chart:", data);
       const labels = data.map(d => d.date);
 
       // Use the updated parsing function
       const sunriseTimes = data.map(d => parseTimeToHours(d.sunrise));
       const goldenHourTimes = data.map(d => parseTimeToHours(d.golden_hour));
       const sunsetTimes = data.map(d => parseTimeToHours(d.sunset));
-
-      console.log("Parsed times:", { sunriseTimes, goldenHourTimes, sunsetTimes });
 
       setChartData({
         labels,

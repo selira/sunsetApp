@@ -3,8 +3,8 @@ const API_BASE_URL = 'http://localhost:3000'; // Your Rails API endpoint
 export const fetchLocations = async () => {
   const response = await fetch(`${API_BASE_URL}/locations`);
   if (!response.ok) {
-    const errorData = await response.json().catch(() => ({ message: 'Failed to fetch locations and parse error' }));
-    throw new Error(errorData.message || 'Failed to fetch locations');
+    const errorData = await response.json().catch(() => ({ error: 'Failed to fetch locations and parse error' }));
+    throw new Error(errorData.error || 'Failed to fetch locations');
   }
   return response.json();
 };
