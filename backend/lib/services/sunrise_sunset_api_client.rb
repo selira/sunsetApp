@@ -9,15 +9,6 @@ module Services
     BASE_API_URL = 'https://api.sunrisesunset.io/json'.freeze
     API_TIMEOUT = 10 # seconds
 
-    # Fetches data for a date range from the SunriseSunset.io API
-    #
-    # @param latitude [Float]
-    # @param longitude [Float]
-    # @param start_date [Date]
-    # @param end_date [Date]
-    # @return [Hash] The parsed JSON response from the API if successful.
-    # @raise [Services::SunriseSunsetApiConnectionError] if there's a network issue.
-    # @raise [Services::SunriseSunsetApiResponseError] if the API returns an error or unexpected response.
     def fetch_daily_data(latitude:, longitude:, start_date:, end_date:)
       query_params = {
         lat: latitude,

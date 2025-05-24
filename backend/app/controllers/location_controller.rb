@@ -1,6 +1,11 @@
+require_relative '../../lib/services/sunrise_sunset_api_client'
+
 class LocationController < ApplicationController
   before_action :set_location, only: %i[history]
   before_action :validate_date_params, only: %i[history]
+
+  rescue_from Services::SunriseSunsetApiConnectionError, with: :render_service_unavailable_response
+  rescue_from Services::SunriseSunsetApiResponseError, with: :render_bad_gateway_response
 
   # GET /locations
   def index
@@ -15,9 +20,6 @@ class LocationController < ApplicationController
       end_date: params[:end_date]
     )
     render json: history_data
-  rescue StandardError => e
-    render json: { error: "Failed to fetch sunrise/sunset data: #{e.message}" },
-           status: :internal_server_error
   end
 
   private
@@ -44,5 +46,15 @@ class LocationController < ApplicationController
     if parsed_start_date > parsed_end_date
       render json: { error: 'Start date cannot be after end date' }, status: :bad_request
     end
+  end
+
+  def render_service_unavailable_response(exception)
+    render json: { error: "External API connection failed: #{exception.message}" },
+           status: :service_unavailable
+  end
+
+  def render_bad_gateway_response(exception)
+    render json: { error: "External API returned an error: #{exception.message} " },
+           status: :bad_gateway
   end
 end
